@@ -1,0 +1,59 @@
+{
+  "family": "task-management-td",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "executionRoleArn": "arn:aws:iam::922383606596:role/ecsTaskExecutionRole",
+  "taskRoleArn": "arn:aws:iam::922383606596:role/task-management-task-role",
+  "containerDefinitions": [
+    {
+      "name": "task-management-api",
+      "image": "922383606596.dkr.ecr.us-east-1.amazonaws.com/task-management-api:latest",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 8000,
+          "hostPort": 8000,
+          "protocol": "tcp"
+        }
+      ],
+      "environment": [
+        {
+          "name": "ENVIRONMENT",
+          "value": "production"
+        },
+        {
+          "name": "AWS_REGION",
+          "value": "us-east-1"
+        },
+        {
+          "name": "SQS_QUEUE_URL",
+          "value": "https://sqs.us-east-1.amazonaws.com/922383606596/task-notifications"
+        },
+        {
+          "name": "DATABASE_URL",
+          "value": "postgresql+psycopg://postgres:REPLACE_PASSWORD@taskdb.ckfokyawc9xp.us-east-1.rds.amazonaws.com:5432/taskdb"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/task-management-api",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
+      "healthCheck": {
+        "command": [
+          "CMD-SHELL",
+          "python -c \"import urllib.request; urllib.request.urlopen('http://localhost:8000/health')\""
+        ],
+        "interval": 30,
+        "timeout": 5,
+        "retries": 3,
+        "startPeriod": 30
+      }
+    }
+  ]
+}

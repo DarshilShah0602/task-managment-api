@@ -1,0 +1,63 @@
+﻿__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Python build/test artifacts
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+dist/
+build/
+*.egg-info/
+
+# Local database files
+*.db
+*.sqlite
+*.sqlite3
+test.db
+
+# Environment and secret files
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+*.jks
+secrets/
+secret/
+
+# AWS local credentials and generated deployment files
+.aws/
+aws-credentials*
+credentials
+config
+trust-policy.json
+*-policy.json
+task-definition-local.json
+ecs-task-definition.local.json
+
+# IDE/OS files
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Docker/local runtime artifacts
+docker-compose.override.yml
