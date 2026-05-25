@@ -58,6 +58,7 @@ jobs:
     - name: Run unit tests
       env:
         DATABASE_URL: postgresql://testuser:testpass@localhost:5432/testdb
+        PYTHONPATH: ${{ github.workspace }}
       run: |
         pytest --cov=app --cov-report=xml --cov-report=term-missing
 
